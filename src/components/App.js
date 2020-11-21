@@ -9,11 +9,14 @@ class Timer extends React.Component {
       y: 0,
       top: "0px",
       left: "0px",
-      start: true,
+      start: false,
       intervalId: null
     };
   }
   handleKeyDown(event) {
+    if (!this.state.start) {
+      return;
+    }
     let x1 = this.state.x;
     let y1 = this.state.y;
     if (event.key === "ArrowRight") {
@@ -31,16 +34,21 @@ class Timer extends React.Component {
     }
     this.setState({ top: this.state.y + "px", left: this.state.x + "px" });
   }
-  componentDidMount() {}
+  componentDidMount() {
+    document.addEventListener("keydown", (event) => this.handleKeyDown(event));
+  }
 
-  componentWillUnmount() {}
+  componentWillUnmount() {
+    document.removeEventListener("keydown", (event) =>
+      this.handleKeyDown(event)
+    );
+  }
 
   handleStart() {
     const id = setInterval(() => {
       this.setState({ time: this.state.time + 1 });
     }, 1000);
-    this.setState({ intervalId: id });
-    document.addEventListener("keydown", (event) => this.handleKeyDown(event));
+    this.setState({ intervalId: id, start: true });
   }
 
   render() {
