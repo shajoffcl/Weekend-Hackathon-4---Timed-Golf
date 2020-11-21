@@ -1,24 +1,36 @@
-import React, { Component, useState } from "react";
+import React from "react";
 import "../styles/App.css";
 class Timer extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { time: 0, x: 0, y: 0 };
+    this.state = { time: 0, x: 0, y: 0, render: false };
   }
-  componentDidMount() {
-    
+  componentDidMount() {}
+
+  componentWillUnmount() {}
+
+  handleStart() {
+    this.setState({ render: true });
   }
-
-  componentWillUnmount() {
-    
+  renderChoice() {
+    if (this.state.render) {
+      return (
+        <>
+          <div className="ball"></div>
+          <div className="hole"></div>
+        </>
+      );
+    }
   }
-
-
 
   render() {
     return (
- <>
-</>
+      <>
+        <button className="start" onClick={() => this.handleStart()}>
+          Start
+        </button>
+        {this.renderChoice()}
+      </>
     );
   }
 }
