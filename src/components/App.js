@@ -3,25 +3,13 @@ import "../styles/App.css";
 class Timer extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { time: 0, x: 0, y: 0, render: false };
+    this.state = { time: 0, x: 0, y: 0 };
   }
   componentDidMount() {}
 
   componentWillUnmount() {}
 
-  handleStart() {
-    this.setState({ render: true });
-  }
-  renderChoice() {
-    if (this.state.render) {
-      return (
-        <>
-          <div className="ball"></div>
-          <div className="hole"></div>
-        </>
-      );
-    }
-  }
+  handleStart() {}
 
   render() {
     return (
@@ -29,7 +17,8 @@ class Timer extends React.Component {
         <button className="start" onClick={() => this.handleStart()}>
           Start
         </button>
-        {this.renderChoice()}
+        <div className="ball"></div>
+        <div className="hole"></div>
       </>
     );
   }
