@@ -18,7 +18,6 @@ class Timer extends React.Component {
       return;
     } else if (this.state.top === "250px" && this.state.left === "250px") {
       clearInterval(this.state.intervalId);
-      this.setState({ intervalId: null });
       return;
     }
     let x1 = this.state.x;
@@ -38,8 +37,17 @@ class Timer extends React.Component {
     }
     this.setState({ top: this.state.y + "px", left: this.state.x + "px" });
   }
+
+  handleInterval() {
+    if (!this.state.start) {
+      return;
+    }
+    this.setState({ time: this.state.time + 1 });
+  }
   componentDidMount() {
     document.addEventListener("keydown", (event) => this.handleKeyDown(event));
+    const id = setInterval(() => this.handleInterval(), 1000);
+    this.setState({ intervalId: id });
   }
 
   componentWillUnmount() {
@@ -49,10 +57,7 @@ class Timer extends React.Component {
   }
 
   handleStart() {
-    const id = setInterval(() => {
-      this.setState({ time: this.state.time + 1 });
-    }, 1000);
-    this.setState({ intervalId: id, start: true });
+    this.setState({ start: true });
   }
 
   render() {
