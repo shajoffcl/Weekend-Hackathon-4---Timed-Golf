@@ -7,16 +7,18 @@ class Timer extends React.Component {
       time: 0,
       x: 0,
       y: 0,
-      top: "0px",
-      left: "0px",
       start: false,
-      intervalId: null
+      intervalId: null,
+      ballPosition: { top: "0px", left: "0px" }
     };
   }
   handleKeyDown(event) {
     if (!this.state.start) {
       return;
-    } else if (this.state.top === "250px" && this.state.left === "250px") {
+    } else if (
+      this.state.ballPosition.top === "250px" &&
+      this.state.ballPosition.left === "250px"
+    ) {
       clearInterval(this.state.intervalId);
       return;
     }
@@ -35,7 +37,9 @@ class Timer extends React.Component {
       y1 += 5;
       this.setState({ y: y1 });
     }
-    this.setState({ top: this.state.y + "px", left: this.state.x + "px" });
+    this.setState({
+      ballPosition: { top: this.state.y + "px", left: this.state.x + "px" }
+    });
   }
 
   handleInterval() {
@@ -67,10 +71,7 @@ class Timer extends React.Component {
           Start
         </button>
         <div className="heading-timer">{this.state.time}</div>
-        <div
-          className="ball"
-          style={{ top: this.state.top, left: this.state.left }}
-        ></div>
+        <div className="ball" style={this.state.ballPosition}></div>
         <div className="hole"></div>
       </>
     );
