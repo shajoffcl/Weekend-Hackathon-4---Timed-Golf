@@ -20,6 +20,7 @@ class Timer extends React.Component {
       this.state.ballPosition.left === "250px"
     ) {
       clearInterval(this.state.intervalId);
+      this.setState({ start: false });
       return;
     }
     let x1 = this.state.x;
