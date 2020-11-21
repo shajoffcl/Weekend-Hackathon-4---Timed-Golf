@@ -16,6 +16,10 @@ class Timer extends React.Component {
   handleKeyDown(event) {
     if (!this.state.start) {
       return;
+    } else if (this.state.top === "250px" && this.state.left === "250px") {
+      clearInterval(this.state.intervalId);
+      this.setState({ intervalId: null });
+      return;
     }
     let x1 = this.state.x;
     let y1 = this.state.y;
