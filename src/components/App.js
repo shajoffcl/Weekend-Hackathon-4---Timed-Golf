@@ -29,7 +29,7 @@ class Timer extends React.Component {
       y1 += 5;
       this.setState({ y: y1 });
     }
-    this.setState({ top: this.state.x + "px", left: this.state.y + "px" });
+    this.setState({ top: this.state.y + "px", left: this.state.x + "px" });
   }
   componentDidMount() {}
 
