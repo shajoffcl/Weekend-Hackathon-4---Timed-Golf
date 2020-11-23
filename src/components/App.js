@@ -19,7 +19,6 @@ class Timer extends React.Component {
       this.state.ballPosition.top === "250px" &&
       this.state.ballPosition.left === "250px"
     ) {
-      clearInterval(this.state.intervalId);
       this.setState({ start: false });
       return;
     }
@@ -59,6 +58,7 @@ class Timer extends React.Component {
     document.removeEventListener("keydown", (event) =>
       this.handleKeyDown(event)
     );
+    clearInterval(this.state.intervalId);
   }
 
   handleStart() {
