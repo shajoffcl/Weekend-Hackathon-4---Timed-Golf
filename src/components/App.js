@@ -29,7 +29,9 @@ class Timer extends React.Component {
   }
 
   handleInterval() {
-    if (!this.state.start) {
+    const gameEnd =
+      this.state.x === "250px" && this.state.y === "250px" ? true : false;
+    if (!this.state.start || gameEnd) {
       return;
     }
     this.setState({ time: this.state.time + 1 });
