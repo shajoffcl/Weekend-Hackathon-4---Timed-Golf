@@ -8,12 +8,14 @@ class Timer extends React.Component {
       x: 0,
       y: 0,
       start: false,
-      intervalId: null,
+      intervalId: 0,
       ballPosition: { top: "0px", left: "0px" }
     };
   }
   handleKeyDown(event) {
-    if (
+    if (!this.state.start) {
+      return;
+    } else if (
       this.state.ballPosition.top === "250px" &&
       this.state.ballPosition.left === "250px"
     ) {
@@ -23,27 +25,15 @@ class Timer extends React.Component {
     let x1 = this.state.x;
     let y1 = this.state.y;
     if (event.key === "ArrowRight") {
-      if (!this.state.start) {
-        return;
-      }
       x1 += 5;
       this.setState({ x: x1 });
     } else if (event.key === "ArrowLeft") {
-      if (!this.state.start) {
-        return;
-      }
       x1 -= 5;
       this.setState({ x: x1 });
     } else if (event.key === "ArrowUp") {
-      if (!this.state.start) {
-        return;
-      }
       y1 -= 5;
       this.setState({ y: y1 });
     } else if (event.key === "ArrowDown") {
-      if (!this.state.start) {
-        return;
-      }
       y1 += 5;
       this.setState({ y: y1 });
     }
