@@ -3,43 +3,29 @@ import "../styles/App.css";
 class Timer extends React.Component {
   constructor(props) {
     super(props);
+    this.intervalId = 0;
     this.state = {
       time: 0,
-      x: 0,
-      y: 0,
-      start: false,
-      intervalId: 0,
-      ballPosition: { top: "0px", left: "0px" }
+      x: "0px",
+      y: "0px",
+      start: false
     };
   }
   handleKeyDown(event) {
     if (!this.state.start) {
       return;
-    } else if (
-      this.state.ballPosition.top === "250px" &&
-      this.state.ballPosition.left === "250px"
-    ) {
-      this.setState({ start: false });
-      return;
     }
-    let x1 = this.state.x;
-    let y1 = this.state.y;
-    if (event.key === "ArrowRight") {
-      x1 += 5;
-      this.setState({ x: x1 });
-    } else if (event.key === "ArrowLeft") {
-      x1 -= 5;
-      this.setState({ x: x1 });
-    } else if (event.key === "ArrowUp") {
-      y1 -= 5;
-      this.setState({ y: y1 });
-    } else if (event.key === "ArrowDown") {
-      y1 += 5;
-      this.setState({ y: y1 });
+    const gameEnd =
+      this.state.x === "250px" && this.state.y === "250px" ? true : false;
+    if (event.key === "ArrowRight" && !gameEnd) {
+      this.setState({ x: +this.state.x.split("px")[0] + 5 + "px" });
+    } else if (event.key === "ArrowLeft" && !gameEnd) {
+      this.setState({ x: +this.state.x.split("px")[0] - 5 + "px" });
+    } else if (event.key === "ArrowUp" && !gameEnd) {
+      this.setState({ y: +this.state.y.split("px")[0] - 5 + "px" });
+    } else if (event.key === "ArrowDown" && !gameEnd) {
+      this.setState({ y: +this.state.y.split("px")[0] + 5 + "px" });
     }
-    this.setState({
-      ballPosition: { top: this.state.y + "px", left: this.state.x + "px" }
-    });
   }
 
   handleInterval() {
@@ -55,15 +41,14 @@ class Timer extends React.Component {
 
   componentDidMount() {
     document.addEventListener("keydown", (event) => this.handleKeyDown(event));
-    const id = setInterval(() => this.handleInterval(), 1000);
-    this.setState({ intervalId: id });
+    this.intervalId = setInterval(() => this.handleInterval(), 1000);
   }
 
   componentWillUnmount() {
     document.removeEventListener("keydown", (event) =>
       this.handleKeyDown(event)
     );
-    clearInterval(this.state.intervalId);
+    clearInterval(this.intervalId);
   }
 
   render() {
@@ -73,7 +58,10 @@ class Timer extends React.Component {
           Start
         </button>
         <div className="heading-timer">{this.state.time}</div>
-        <div className="ball" style={this.state.ballPosition}></div>
+        <div
+          className="ball"
+          style={{ top: this.state.y, left: this.state.x }}
+        ></div>
         <div className="hole"></div>
       </>
     );
