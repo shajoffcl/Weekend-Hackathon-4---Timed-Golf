@@ -13,9 +13,7 @@ class Timer extends React.Component {
     };
   }
   handleKeyDown(event) {
-    if (!this.state.start) {
-      return;
-    } else if (
+    if (
       this.state.ballPosition.top === "250px" &&
       this.state.ballPosition.left === "250px"
     ) {
@@ -25,15 +23,27 @@ class Timer extends React.Component {
     let x1 = this.state.x;
     let y1 = this.state.y;
     if (event.key === "ArrowRight") {
+      if (!this.state.start) {
+        return;
+      }
       x1 += 5;
       this.setState({ x: x1 });
     } else if (event.key === "ArrowLeft") {
+      if (!this.state.start) {
+        return;
+      }
       x1 -= 5;
       this.setState({ x: x1 });
     } else if (event.key === "ArrowUp") {
+      if (!this.state.start) {
+        return;
+      }
       y1 -= 5;
       this.setState({ y: y1 });
     } else if (event.key === "ArrowDown") {
+      if (!this.state.start) {
+        return;
+      }
       y1 += 5;
       this.setState({ y: y1 });
     }
@@ -48,6 +58,11 @@ class Timer extends React.Component {
     }
     this.setState({ time: this.state.time + 1 });
   }
+
+  handleStart() {
+    this.setState({ start: true });
+  }
+
   componentDidMount() {
     document.addEventListener("keydown", (event) => this.handleKeyDown(event));
     const id = setInterval(() => this.handleInterval(), 1000);
@@ -59,10 +74,6 @@ class Timer extends React.Component {
       this.handleKeyDown(event)
     );
     clearInterval(this.state.intervalId);
-  }
-
-  handleStart() {
-    this.setState({ start: true });
   }
 
   render() {
